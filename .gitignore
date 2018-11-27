@@ -1,0 +1,13 @@
+#################################
+##      git ignore             ##
+#################################
+Content/StarterContent/
+Binaries/
+Build/
+Intermediate/
+Saved/
+
+##############
+# vs project #
+##############
+.vs/
