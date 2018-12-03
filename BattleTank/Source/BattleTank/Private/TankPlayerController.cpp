@@ -9,11 +9,11 @@ void ATankPlayerController::BeginPlay()
 
 	// Check in case of nullptr which may cause big problem
 	if (auto tank = GetControlledTank()) {
-		UE_LOG(LogTemp, Warning, TEXT("Player Control %s Begin Play"), *(tank->GetName()));
+		UE_LOG(LogTemp, Warning, TEXT("[ATankPlayerController::BeginPlay] Player Control %s Begin Play"), *(tank->GetName()));
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Cannot Get Player Controller"));
+		UE_LOG(LogTemp, Warning, TEXT("[ATankPlayerController::BeginPlay] Cannot Get Player Controller"));
 	}
 
 }
