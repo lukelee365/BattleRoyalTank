@@ -32,3 +32,9 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+void ATank::AimAt(FVector HitLocation)
+{
+	auto OurTankName = GetName();
+	//Text in macro always use formated Text (BlaBlka : %s), *string
+	UE_LOG(LogTemp, Warning, TEXT("%s Aim At %s"), *OurTankName,*HitLocation.ToString());
+}

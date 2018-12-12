@@ -15,13 +15,16 @@ class BATTLETANK_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
 	
-public:	
+private:	
+	// means override the BeginPlay in parent
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
+
 	// means function won't change anything
 	ATank * GetControlledTank() const;
 
 	ATank * GetPlayerControllerTank() const;
 
-	// means override the BeginPlay in parent
-	virtual void BeginPlay() override;
+
 	
 };
