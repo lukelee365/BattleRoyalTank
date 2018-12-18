@@ -2,6 +2,8 @@
 
 #include "TankAimingComponent.h"
 #include "Engine/StaticMesh.h"
+#include "TankBarrel.h" // include all the code with TankBarrel, It will include all the file and its dependecy class
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values for this component's properties
@@ -9,40 +11,43 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
-
+	PrimaryComponentTick.bCanEverTick = false;
 	// ...
 }
 
 
-// Called when the game starts
-void UTankAimingComponent::BeginPlay()
+void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
-	Super::BeginPlay();
-
-	// ...
-	
-}
-
-
-// Called every frame
-void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
-}
-
-void UTankAimingComponent::AimAt(FVector HitLocation)
-{
-	auto OurTankName = GetOwner()->GetName();
-	//Text in macro always use formated Text (BlaBlka : %s), *string
-	UE_LOG(LogTemp, Warning, TEXT("%s Aim At %s"), *OurTankName, *HitLocation.ToString());
 	if (!BarrelComponent) { return; }
-	UE_LOG(LogTemp, Warning, TEXT("The Barrel At %s"), *BarrelComponent->GetComponentLocation().ToString());
+	FVector OutLaunchVelocity;
+	auto StartLocation = BarrelComponent->GetSocketLocation("Muzzle");
+	if (UGameplayStatics::SuggestProjectileVelocity(
+		this,
+		OutLaunchVelocity,
+		StartLocation,
+		HitLocation,
+		LaunchSpeed)) {
+		auto OurTankName = GetOwner()->GetName();
+		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
+		//Text in macro always use formated Text (BlaBlka : %s), *string
+		UE_LOG(LogTemp, Warning, TEXT("[UTankAimingComponent::AimAt] %s suggestd velocity is %s"), *OurTankName, *OutLaunchVelocity.ToString());
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("[UTankAimingComponent::AimAt] Cannot Calculate projectile velocity"));
+	}
+
+
+}
+void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) 
+{
+	auto AimRotation = AimDirection.Rotation();
+	auto BarrelRotation = BarrelComponent->GetForwardVector().Rotation();
+	auto DeltaRotationj = AimRotation - BarrelRotation;
+	BarrelComponent->Elevate(5);
 }
 
-void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent* BarrelToSet)
+void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	BarrelComponent = BarrelToSet;
 }

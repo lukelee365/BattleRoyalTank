@@ -6,7 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
 
-
+class UTankBarrel; //ForwardDeclaration. Any define the class so that compiler happy, not files copy
+                   //-> less dependency than Using #include It will copy all the header files and its dependency
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
@@ -15,18 +16,12 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UTankAimingComponent();
-	void AimAt(FVector HitLocation);
-	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+	void AimAt(FVector HitLocation, float LaunchSpeed);
+	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
 protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
-	UStaticMeshComponent* BarrelComponent = nullptr;
+	UTankBarrel* BarrelComponent = nullptr;
+	void MoveBarrelTowards(FVector AimDirection);
+	//void MoveBarrelTowards(FVector AimDirection);
 
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-		
-	
 };
