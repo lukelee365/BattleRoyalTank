@@ -8,6 +8,8 @@
 
 class UTankAimingComponent;
 class UTankBarrel; ///ForwardDeclaration. -> less dependency than Using #include.
+class UTankTurret;
+
 UCLASS()
 class BATTLETANK_API ATank : public APawn
 {
@@ -19,13 +21,10 @@ public:
 	//setter for the Barrel Object
 	// A Function that can be called in blueprint
 	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
+	void SetTankReference(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
 protected:
 	UTankAimingComponent * TankAimingComponent = nullptr;
-	//U means Inheirt from UObject A Means inherit form AActor
-	UTankBarrel* BarrelComponent = nullptr;
-
 
 private:	
 	// Sets default values for this pawn's properties

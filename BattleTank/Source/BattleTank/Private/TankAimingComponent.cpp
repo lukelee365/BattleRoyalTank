@@ -3,6 +3,7 @@
 #include "TankAimingComponent.h"
 #include "Engine/StaticMesh.h"
 #include "TankBarrel.h" // include all the code with TankBarrel, It will include all the file and its dependecy class
+#include "TankTurret.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -29,6 +30,8 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		LaunchSpeed)) {
 		auto OurTankName = GetOwner()->GetName();
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
+		MoveBarrelTowards(AimDirection);
+		MoveTurretTowards(AimDirection);
 		//Text in macro always use formated Text (BlaBlka : %s), *string
 		UE_LOG(LogTemp, Warning, TEXT("[UTankAimingComponent::AimAt] %s suggestd velocity is %s"), *OurTankName, *AimDirection.ToString());
 	}
@@ -43,12 +46,21 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
 	auto AimRotation = AimDirection.Rotation();
 	auto BarrelRotation = BarrelComponent->GetForwardVector().Rotation();
-	auto DeltaRotationj = AimRotation - BarrelRotation;
-	BarrelComponent->Elevate(5);
+	auto DeltaRotation = AimRotation - BarrelRotation;
+	BarrelComponent->Elevate(DeltaRotation.Pitch);
 }
 
-void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
+void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
+{
+	auto AimRotation = AimDirection.Rotation();
+	auto TurretRotation = TurretComponent->GetForwardVector().Rotation();
+	auto DeltaRotation = AimRotation - TurretRotation;
+	TurretComponent->RotateTurret(DeltaRotation.Yaw);
+}
+
+void UTankAimingComponent::SetTankReference(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
 	BarrelComponent = BarrelToSet;
+	TurretComponent = TurretToSet;
 }
 
