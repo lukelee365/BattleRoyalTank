@@ -27,39 +27,31 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		OutLaunchVelocity,
 		StartLocation,
 		HitLocation,
-		LaunchSpeed)) {
+		LaunchSpeed,
+		false,
+		0,
+		0,
+		ESuggestProjVelocityTraceOption::DoNotTrace)) {
 		auto OurTankName = GetOwner()->GetName();
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
-		MoveTurretTowards(AimDirection);
 		//Text in macro always use formated Text (BlaBlka : %s), *string
 		UE_LOG(LogTemp, Warning, TEXT("[UTankAimingComponent::AimAt] %s suggestd velocity is %s"), *OurTankName, *AimDirection.ToString());
 	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("[UTankAimingComponent::AimAt] Cannot Calculate projectile velocity"));
-	}
-
-
 }
+
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) 
 {
 	auto AimRotation = AimDirection.Rotation();
 	auto BarrelRotation = BarrelComponent->GetForwardVector().Rotation();
 	auto DeltaRotation = AimRotation - BarrelRotation;
 	BarrelComponent->Elevate(DeltaRotation.Pitch);
-}
-
-void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
-{
-	auto AimRotation = AimDirection.Rotation();
-	auto TurretRotation = TurretComponent->GetForwardVector().Rotation();
-	auto DeltaRotation = AimRotation - TurretRotation;
 	TurretComponent->RotateTurret(DeltaRotation.Yaw);
 }
 
 void UTankAimingComponent::SetTankReference(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
+	if (!BarrelToSet || !TurretToSet) { return; }
 	BarrelComponent = BarrelToSet;
 	TurretComponent = TurretToSet;
 }

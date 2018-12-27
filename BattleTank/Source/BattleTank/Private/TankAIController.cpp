@@ -37,6 +37,7 @@ void ATankAIController::Tick(float DeltaTime)
 	auto Tank = GetControlledTank();
 	if (!Tank) { return;}
 	Tank->AimAt(GetPlayerControllerTank()->GetActorLocation());
+	Tank->Fire();
 }
 
 ATank* ATankAIController::GetControlledTank() const

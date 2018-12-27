@@ -25,7 +25,6 @@ protected:
 	UTankBarrel* BarrelComponent = nullptr;
 	UTankTurret* TurretComponent = nullptr;
 	void MoveBarrelTowards(FVector AimDirection);
-	void MoveTurretTowards(FVector AimDirection);
 	//void MoveBarrelTowards(FVector AimDirection);
 
 };
