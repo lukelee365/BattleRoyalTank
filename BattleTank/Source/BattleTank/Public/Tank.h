@@ -41,13 +41,13 @@ private:
 	//Referecne to spawn projectile
 	UTankBarrel* Barrel = nullptr;
 
-	UPROPERTY(EditAnywhere, Category = Firing)
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
 		float LaunchSpeed = 4000; //TODO Find sensible starting value of 1000 m/s
 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)//Every instance can have different value
 		TSubclassOf<AProjectile> ProjectileBluePrint;
 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)//Every Instance must have same default value
 		float ReloadTimeInSeconds = 3;
 
 	double LastFireTime = 0;
