@@ -2,6 +2,7 @@
 
 #include "Tank.h"
 #include "TankAimingComponent.h"
+#include "TankMovementComponent.h"
 #include "Engine/World.h"
 #include "Projectile.h"
 #include "TankBarrel.h"
@@ -68,3 +69,4 @@ void ATank::Fire() {
 		LastFireTime = FPlatformTime::Seconds();
 	}
 }
+

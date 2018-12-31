@@ -7,6 +7,7 @@
 #include "Tank.generated.h"
 
 class UTankAimingComponent;
+class UTankMovementComponent;
 class UTankBarrel; ///ForwardDeclaration. -> less dependency than Using #include.
 class UTankTurret;
 class AProjectile;
@@ -25,9 +26,13 @@ public:
 	void SetTankReference(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 	UFUNCTION(BlueprintCallable, Category = Event)
 	void Fire();
+	void Move();
 
 protected:
-	UTankAimingComponent * TankAimingComponent = nullptr;
+	UTankAimingComponent* TankAimingComponent = nullptr;
+	//Readonly property from blueprint if it's a C++ component and add using CreateDefaultSubobject
+	// UPROPERTY(BlueprintReadOnly, Category = Input)
+	UTankMovementComponent* TankMovementComponent = nullptr;
 
 private:	
 	// Sets default values for this pawn's properties

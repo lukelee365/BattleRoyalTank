@@ -25,6 +25,7 @@ void ATankPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	AimTowardsCrosshair();
+	auto Tank = GetControlledTank();
 	///UE_LOG(LogTemp, Warning, TEXT("[ATankPlayerController::Tick] Tick is working"));
 }
 
