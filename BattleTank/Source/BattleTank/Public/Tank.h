@@ -23,18 +23,17 @@ public:
 	//setter for the Barrel Object
 	// A Function that can be called in blueprint
 	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetTankReference(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
+		void SetTankReference(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 	UFUNCTION(BlueprintCallable, Category = Event)
-	void Fire();
-	void Move();
+		void Fire();
 
 protected:
-	UTankAimingComponent* TankAimingComponent = nullptr;
+	UTankAimingComponent * TankAimingComponent = nullptr;
 	//Readonly property from blueprint if it's a C++ component and add using CreateDefaultSubobject
 	// UPROPERTY(BlueprintReadOnly, Category = Input)
 	UTankMovementComponent* TankMovementComponent = nullptr;
 
-private:	
+private:
 	// Sets default values for this pawn's properties
 	ATank();
 	// Called when the game starts or when spawned
@@ -49,7 +48,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 		float LaunchSpeed = 4000; //TODO Find sensible starting value of 1000 m/s
 
-	UPROPERTY(EditDefaultsOnly, Category = Setup)//Every instance can have different value
+	UPROPERTY(EditDefaultsOnly, Category = Setup)//Every instance  must have same default value
 		TSubclassOf<AProjectile> ProjectileBluePrint;
 
 	UPROPERTY(EditDefaultsOnly, Category = Setup)//Every Instance must have same default value
