@@ -43,5 +43,13 @@ void UTankMovementComponent::IntendMoveBackward(float Throw)
 	//TODO prevent double speed due to dual control issues
 }
 
+void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
+{
+	//No Need to Call super since the whole function get replaced
+	auto TankName = GetOwner()->GetName();
+	auto MoveVelocityString = MoveVelocity.ToString();
+	UE_LOG(LogTemp, Warning, TEXT("%s velocity is %s"), *TankName, *MoveVelocityString)
+}
+
 
 

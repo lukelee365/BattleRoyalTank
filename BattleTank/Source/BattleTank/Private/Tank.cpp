@@ -40,12 +40,7 @@ void ATank::AimAt(FVector HitLocation)
 
 void ATank::SetTankReference(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
-	if (!BarrelToSet || !TurretToSet) 
-		return; 
-	else
-		{
-			UE_LOG(LogTemp, Warning, TEXT("[ATank::SetTankReference] Cannot find Turret and Barrel pointer"));
-		}
+	if (!BarrelToSet && !TurretToSet) return; 
 	TankAimingComponent->SetTankReference(BarrelToSet, TurretToSet);
 	Barrel = BarrelToSet;
 }
