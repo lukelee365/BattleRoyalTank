@@ -9,6 +9,15 @@
 class UTankBarrel; //ForwardDeclaration. Any define the class so that compiler happy, not files copy
                    //-> less dependency than Using #include It will copy all the header files and its dependency
 class UTankTurret;
+
+UENUM()
+enum class EFiringStatus : uint8
+{
+	AIMING,
+	LOCK,
+	RELOADING
+};
+
 //Holds Barrel's Property, Calculate and Do the Aiming
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
@@ -22,9 +31,13 @@ public:
 	void SetTankReference(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
 protected:
-	UTankBarrel* BarrelComponent = nullptr;
-	UTankTurret* TurretComponent = nullptr;
-	void MoveBarrelTowards(FVector AimDirection);
+	UPROPERTY(BlueprintReadOnly, Category = "Status")
+		EFiringStatus FiringStatus = EFiringStatus::RELOADING;
 	//void MoveBarrelTowards(FVector AimDirection);
 
+private:
+	UTankBarrel * BarrelComponent = nullptr;
+	UTankTurret* TurretComponent = nullptr;
+
+	void MoveBarrelTowards(FVector AimDirection);
 };

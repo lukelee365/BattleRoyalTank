@@ -15,11 +15,13 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
-
+protected:
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	ATank * GetControlledTank() const;
 
 private:
 	// means function won't change anything
-	ATank* GetControlledTank() const; 
+
 	// means override the BeginPlay in parent
 	virtual void BeginPlay() override;
 	// means override the Tick in parent Override mean check the parent do have the mehtod and Paramter

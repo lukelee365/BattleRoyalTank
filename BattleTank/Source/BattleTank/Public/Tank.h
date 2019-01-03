@@ -28,9 +28,10 @@ public:
 		void Fire();
 
 protected:
+	UPROPERTY(BlueprintReadOnly, Category = Input)
 	UTankAimingComponent * TankAimingComponent = nullptr;
 	//Readonly property from blueprint if it's a C++ component and add using CreateDefaultSubobject
-	// UPROPERTY(BlueprintReadOnly, Category = Input)
+	UPROPERTY(BlueprintReadOnly, Category = Input)
 	UTankMovementComponent* TankMovementComponent = nullptr;
 
 private:

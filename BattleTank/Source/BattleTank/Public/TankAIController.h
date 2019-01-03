@@ -27,7 +27,7 @@ private:
 	ATank * GetPlayerControllerTank() const;
 	//How close the radius is accept for stop
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
-	float AcceptanceRadius = 0;
+	float AcceptanceRadius = 200;
 
 	
 };
