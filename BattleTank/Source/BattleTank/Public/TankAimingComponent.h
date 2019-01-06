@@ -38,12 +38,14 @@ public:
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Status")
-		EFiringStatus FiringStatus = EFiringStatus::LOCK;
+		EFiringStatus FiringStatus = EFiringStatus::RELOADING;
 	//void MoveBarrelTowards(FVector AimDirection);
 
 private:
 	UTankBarrel* BarrelComponent = nullptr;
 	UTankTurret* TurretComponent = nullptr;
+	FVector AimDirection = FVector::ZeroVector;
+	double LastFireTime = 0;
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 		float LaunchSpeed = 4000; //TODO Find sensible starting value of 1000 m/s
 	UPROPERTY(EditDefaultsOnly, Category = Setup)//Every instance  must have same default value
@@ -51,8 +53,10 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = Setup)//Every Instance must have same default value
 		float ReloadTimeInSeconds = 3;
-
-	double LastFireTime = 0;
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+	virtual void BeginPlay() override;
+	bool IsBarrelMoving();
+	
 		//setter for the Barrel Object
 
 	void MoveBarrelTowards(FVector AimDirection);
