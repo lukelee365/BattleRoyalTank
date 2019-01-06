@@ -4,6 +4,7 @@
 #include "Engine/StaticMesh.h"
 #include "TankBarrel.h" // include all the code with TankBarrel, It will include all the file and its dependecy class
 #include "TankTurret.h"
+#include "Projectile.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -54,6 +55,26 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto DeltaRotation = AimRotation - BarrelRotation;
 	BarrelComponent->Elevate(DeltaRotation.Pitch);
 	TurretComponent->RotateTurret(DeltaRotation.Yaw);
+}
+
+void UTankAimingComponent::Fire() {
+
+	if (!ensure(BarrelComponent)) { return; }
+	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+
+	if (isReloaded)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("[ATank::Fire] isReloaded"));
+		//Spawn the projectile in barrel socket
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBluePrint,
+			BarrelComponent->GetSocketLocation(FName("Muzzle")),
+			BarrelComponent->GetSocketRotation(FName("Muzzle"))
+			);
+		if (!Projectile) return;
+		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFireTime = FPlatformTime::Seconds();
+	}
 }
 
 

@@ -22,7 +22,7 @@ void ATankAIController::Tick(float DeltaTime)
 	auto PlayerTank = GetPlayerControllerTank();
 	if (!ensure(Tank&&PlayerTank)) { return; }
 	MoveToActor(PlayerTank, AcceptanceRadius);
-	Tank->Fire();
+	AimingComponent->Fire();
 }
 
 ATank* ATankAIController::GetControlledTank() const

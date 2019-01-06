@@ -3,8 +3,7 @@
 #include "Tank.h"
 #include "TankAimingComponent.h"
 #include "Engine/World.h"
-#include "Projectile.h"
-#include "TankBarrel.h"
+
 
 // Sets default values
 ATank::ATank()
@@ -17,27 +16,7 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
-	Barrel = FindComponentByClass<UTankBarrel>();
 }
 
 
-void ATank::Fire() {
-
-	if (!ensure(Barrel)) { return;}
-	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-
-	if (isReloaded)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("[ATank::Fire] isReloaded"));
-		//Spawn the projectile in barrel socket
-		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
-			ProjectileBluePrint,
-			Barrel->GetSocketLocation(FName("Muzzle")),
-			Barrel->GetSocketRotation(FName("Muzzle"))
-			);
-		if (!Projectile) return;
-		Projectile->LaunchProjectile(LaunchSpeed);
-		LastFireTime = FPlatformTime::Seconds();
-	}
-}
 
