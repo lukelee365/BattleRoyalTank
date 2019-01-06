@@ -3,6 +3,7 @@
 #include "TankAIController.h"
 #include "GameFramework/Actor.h"
 #include "Tank.h"
+#include "TankAimingComponent.h"
 #include "Engine/World.h"
 
 void ATankAIController::BeginPlay()
@@ -10,6 +11,8 @@ void ATankAIController::BeginPlay()
 	//Make super parent class Beginplay get called
 	Super::BeginPlay();
 	auto ControlledTank = GetControlledTank();
+	if (!ensure(ControlledTank))return;
+	AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
 }
 
 void ATankAIController::Tick(float DeltaTime)
@@ -19,7 +22,6 @@ void ATankAIController::Tick(float DeltaTime)
 	auto PlayerTank = GetPlayerControllerTank();
 	if (!ensure(Tank&&PlayerTank)) { return; }
 	MoveToActor(PlayerTank, AcceptanceRadius);
-	Tank->AimAt(GetPlayerControllerTank()->GetActorLocation());
 	Tank->Fire();
 }
 

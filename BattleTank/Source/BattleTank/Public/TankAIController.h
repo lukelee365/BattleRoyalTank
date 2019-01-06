@@ -11,6 +11,7 @@
  * 
  */
 class ATank;
+class UTankAimingComponent;
 UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController
 {
@@ -21,6 +22,7 @@ private:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
+	UTankAimingComponent* AimingComponent = nullptr;
 	// means function won't change anything
 	ATank * GetControlledTank() const;
 

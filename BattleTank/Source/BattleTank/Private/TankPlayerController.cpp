@@ -10,7 +10,7 @@ void ATankPlayerController::BeginPlay()
 {
 	//Make super parent class Beginplay get called
 	Super::BeginPlay();
-	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if(ensure(AimingComponent))
 		FoundAimiingComponent(AimingComponent);
 	else
@@ -42,21 +42,19 @@ ATank* ATankPlayerController::GetControlledTank() const
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
-	auto Tank = GetControlledTank();
-	// check for null pointer
-	if (!ensure(Tank)) { return; }
-	//Get the Direction vector from crosshair and location, fire a lineTrace to detenind where hit on landScape
-
+	//auto Tank = GetControlledTank();
+	//// check for null pointer
+	//if (!ensure(Tank)) { return; }
+	////Get the Direction vector from crosshair and location, fire a lineTrace to detenind where hit on landScape
+	if (!ensure(AimingComponent)) return;
 	FVector HitLocation;//Out Location
 
 	if (GetSightRayHitLocation(HitLocation)) {
-		Tank->AimAt(HitLocation);
+		AimingComponent->AimAt(HitLocation);
 	}
-
 
 	//If hit Landscaoe
 	//Tell Tank aim to the location
-
 }
 
 bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation)const

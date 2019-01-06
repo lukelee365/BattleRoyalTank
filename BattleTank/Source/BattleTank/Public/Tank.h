@@ -6,7 +6,6 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
-class UTankAimingComponent;
 class UTankBarrel; ///ForwardDeclaration. -> less dependency than Using #include.
 class UTankTurret;
 class AProjectile;
@@ -18,16 +17,16 @@ class BATTLETANK_API ATank : public APawn
 
 public:
 
-	void AimAt(FVector HitLocation);
 	//setter for the Barrel Object
 	// A Function that can be called in blueprint
 	UFUNCTION(BlueprintCallable, Category = Event)
 		void Fire();
 
 protected:
-	UPROPERTY(BlueprintReadOnly, Category = Input)
-	UTankAimingComponent * TankAimingComponent = nullptr;
-	//Readonly property from blueprint if it's a C++ component and add using CreateDefaultSubobject
+	////Readonly property from blueprint if it's a C++ component and add using CreateDefaultSubobject
+	//UPROPERTY(BlueprintReadOnly, Category = Input)
+	//UTankAimingComponent * TankAimingComponent = nullptr;
+
 
 private:
 	// Sets default values for this pawn's properties

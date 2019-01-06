@@ -20,11 +20,10 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	ATank * GetControlledTank() const;
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
-		void FoundAimiingComponent(UTankAimingComponent* AimingCompRef);
+	void FoundAimiingComponent(UTankAimingComponent* AimingCompRef);
 
 private:
-	// means function won't change anything
-
+	UTankAimingComponent * AimingComponent = nullptr;
 	// means override the BeginPlay in parent
 	virtual void BeginPlay() override;
 	// means override the Tick in parent Override mean check the parent do have the mehtod and Paramter
