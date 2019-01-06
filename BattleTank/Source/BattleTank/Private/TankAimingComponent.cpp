@@ -18,14 +18,14 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
-	if (!BarrelToSet || !TurretToSet) return;
+	if (!ensure(BarrelToSet && TurretToSet)) return;
 	BarrelComponent = BarrelToSet;
 	TurretComponent = TurretToSet;
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
-	if (!BarrelComponent) { return; }
+	if (!ensure(BarrelComponent)) { return; }
 	FVector OutLaunchVelocity;
 	auto StartLocation = BarrelComponent->GetSocketLocation("Muzzle");
 	if (UGameplayStatics::SuggestProjectileVelocity(
@@ -46,9 +46,9 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	}
 }
 
-void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) 
+void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
-	if (!BarrelComponent || !TurretComponent) return;
+	if (!ensure(BarrelComponent && TurretComponent)) return;
 	auto AimRotation = AimDirection.Rotation();
 	auto BarrelRotation = BarrelComponent->GetForwardVector().Rotation();
 	auto DeltaRotation = AimRotation - BarrelRotation;

@@ -3,12 +3,18 @@
 #include "TankPlayerController.h"
 #include "Engine/World.h"
 #include "Tank.h"
+#include "TankAimingComponent.h"
 #include "GameFramework/Actor.h"
 
 void ATankPlayerController::BeginPlay() 
 {
 	//Make super parent class Beginplay get called
 	Super::BeginPlay();
+	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	if(ensure(AimingComponent))
+		FoundAimiingComponent(AimingComponent);
+	else
+		UE_LOG(LogTemp, Warning, TEXT("[ATankPlayerController::BeginPlay] Cannot find aimming component"));
 
 	// Check in case of nullptr which may cause big problem
 	if (auto tank = GetControlledTank()) {
@@ -38,7 +44,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 {
 	auto Tank = GetControlledTank();
 	// check for null pointer
-	if (!Tank) { return; }
+	if (!ensure(Tank)) { return; }
 	//Get the Direction vector from crosshair and location, fire a lineTrace to detenind where hit on landScape
 
 	FVector HitLocation;//Out Location

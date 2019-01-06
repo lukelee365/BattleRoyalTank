@@ -33,7 +33,7 @@ public:
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Status")
-		EFiringStatus FiringStatus = EFiringStatus::RELOADING;
+		EFiringStatus FiringStatus = EFiringStatus::LOCK;
 	//void MoveBarrelTowards(FVector AimDirection);
 
 private:
