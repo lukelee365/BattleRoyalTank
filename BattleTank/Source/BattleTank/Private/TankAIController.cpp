@@ -21,8 +21,12 @@ void ATankAIController::Tick(float DeltaTime)
 	auto Tank = GetControlledTank();
 	auto PlayerTank = GetPlayerControllerTank();
 	if (!ensure(Tank&&PlayerTank)) { return; }
+	// Triger the AI tank to use A* to move, Call the RequestDirectMove in UNavMovementComponent and Everything Resawn it 
 	MoveToActor(PlayerTank, AcceptanceRadius);
-	AimingComponent->Fire();
+	// If Aiming or Lock then fire 
+	AimingComponent->AimAt(GetPlayerControllerTank()->GetActorLocation());
+	if(AimingComponent->GetFireStatus() == EFiringStatus::AIMING)
+		AimingComponent->Fire();
 }
 
 ATank* ATankAIController::GetControlledTank() const

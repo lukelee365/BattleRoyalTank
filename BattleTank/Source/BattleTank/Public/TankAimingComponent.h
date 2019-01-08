@@ -16,6 +16,7 @@ enum class EFiringStatus : uint8
 {
 	AIMING,
 	LOCK,
+	NOAMMO,
 	RELOADING
 };
 
@@ -33,12 +34,15 @@ public:
 	void AimAt(FVector HitLocation);
 
 	// A Function that can be called in blueprint
-	UFUNCTION(BlueprintCallable, Category = Event)
+	UFUNCTION(BlueprintCallable, Category = "Event")
 	void Fire();
+	EFiringStatus GetFireStatus() const;
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Status")
 		EFiringStatus FiringStatus = EFiringStatus::RELOADING;
+	UPROPERTY(BlueprintReadOnly, Category = "Ammo")
+		int AmmoLeft = 10;
 	//void MoveBarrelTowards(FVector AimDirection);
 
 private:
@@ -46,12 +50,13 @@ private:
 	UTankTurret* TurretComponent = nullptr;
 	FVector AimDirection = FVector::ZeroVector;
 	double LastFireTime = 0;
-	UPROPERTY(EditDefaultsOnly, Category = Firing)
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float LaunchSpeed = 4000; //TODO Find sensible starting value of 1000 m/s
-	UPROPERTY(EditDefaultsOnly, Category = Setup)//Every instance  must have same default value
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")//Every instance  must have same default value
 		TSubclassOf<AProjectile> ProjectileBluePrint;
 
-	UPROPERTY(EditDefaultsOnly, Category = Setup)//Every Instance must have same default value
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")//Every Instance must have same default value
 		float ReloadTimeInSeconds = 3;
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 	virtual void BeginPlay() override;
