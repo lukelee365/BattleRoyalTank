@@ -25,7 +25,7 @@ void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UP
 {
 	DriveTrack();
 	ApplySidewayForce();
-	UE_LOG(LogTemp, Warning, TEXT("[ UTankTrack::OnHit] The value of throttle %f"), CurrentThrottle);
+	//UE_LOG(LogTemp, Warning, TEXT("[ UTankTrack::OnHit] The value of throttle %f"), CurrentThrottle);
 	// set the Throttle back to 0 so that stop
 	CurrentThrottle = 0;
 }

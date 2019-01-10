@@ -10,7 +10,7 @@ void ATankAIController::BeginPlay()
 {
 	//Make super parent class Beginplay get called
 	Super::BeginPlay();
-	auto ControlledTank = GetControlledTank();
+	auto ControlledTank = GetPawn();
 	if (!ensure(ControlledTank))return;
 	AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
 }
@@ -18,9 +18,8 @@ void ATankAIController::BeginPlay()
 void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	auto Tank = GetControlledTank();
 	auto PlayerTank = GetPlayerControllerTank();
-	if (!ensure(Tank&&PlayerTank)) { return; }
+	if (!ensure(PlayerTank)) { return; }
 	// Triger the AI tank to use A* to move, Call the RequestDirectMove in UNavMovementComponent and Everything Resawn it 
 	MoveToActor(PlayerTank, AcceptanceRadius);
 	// If Aiming or Lock then fire 

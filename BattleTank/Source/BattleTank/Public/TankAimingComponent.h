@@ -42,7 +42,7 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Status")
 		EFiringStatus FiringStatus = EFiringStatus::RELOADING;
 	UPROPERTY(BlueprintReadOnly, Category = "Ammo")
-		int AmmoLeft = 10;
+		int AmmoLeft = 15;
 	//void MoveBarrelTowards(FVector AimDirection);
 
 private:
