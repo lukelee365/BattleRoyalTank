@@ -19,7 +19,10 @@ private:
 	UStaticMeshComponent* CollisionMesh = nullptr;
 	UPROPERTY(VisibleAnyWhere, Category = "Components")
 	UParticleSystemComponent* LaunchBlast = nullptr;
-
+	UPROPERTY(VisibleAnyWhere, Category = "Components")
+	UParticleSystemComponent* ImpactBlast = nullptr;
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

@@ -114,7 +114,7 @@ void UTankAimingComponent::Fire() {
 		LastFireTime = FPlatformTime::Seconds();
 		if (!ensure(Projectile)) return;
 		Projectile->LaunchProjectile(LaunchSpeed);
-		UE_LOG(LogTemp, Warning, TEXT("[ATank::Fire] is Reloading"));
+		//UE_LOG(LogTemp, Warning, TEXT("[ATank::Fire] is Reloading"));
 		AmmoLeft--;
 	}
 }
